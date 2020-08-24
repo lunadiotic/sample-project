@@ -22,3 +22,9 @@ Route::post('/auth/register', 'Api\Auth\RegisterController');
 Route::post('/auth/login', 'Api\Auth\LoginController@login');
 Route::post('/auth/logout', 'Api\Auth\LoginController@logout')
     ->middleware('auth:sanctum');
+
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/attendace/today', 'Api\AttendanceController@today');
+    Route::post('/attendace/in', 'Api\AttendanceController@in');
+    Route::post('/attendace/out', 'Api\AttendanceController@out');
+});
