@@ -23,10 +23,11 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'is_admin' => $request->is_admin ?? false
         ]);
 
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
                 'message' => 'The provided credentials are incorrect.',
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
