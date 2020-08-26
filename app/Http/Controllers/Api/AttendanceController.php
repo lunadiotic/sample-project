@@ -14,7 +14,7 @@ class AttendanceController extends Controller
     {
         $attendaces = Attendance::whereDate('created_at', Carbon::today())
             ->with(['user'])->get();
-            
+
         return response()->json([
             'message' => 'list of attendaces today',
             'data' => $attendaces,
@@ -24,7 +24,9 @@ class AttendanceController extends Controller
     public function in(Request $request)
     {
         $attendace = $request->user()->attendances()->create([
-            'status' => 'in'
+            'status' => 'in',
+            'long' => $request->long,
+            'lat' => $request->lat
         ]);
 
         return response()->json([
@@ -36,7 +38,9 @@ class AttendanceController extends Controller
     public function out(Request $request)
     {
         $attendace = $request->user()->attendances()->create([
-            'status' => 'out'
+            'status' => 'out',
+            'long' => $request->long,
+            'lat' => $request->lat
         ]);
 
         return response()->json([
