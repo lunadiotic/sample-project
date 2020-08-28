@@ -22,6 +22,23 @@ class AttendanceController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function history(Request $request)
+    {
+        $request->validate([
+            'type' => ['required']
+        ]);
+
+        $data = $request->user()
+            ->attendances()
+            ->where('status', $request->type)
+            ->paginate(10);
+
+        return response()->json([
+            'message' => "list of attendaces by user with {$request->type} status",
+            'data' => $data,
+        ], Response::HTTP_OK);
+    }
+
     public function in(Request $request)
     {
         $request->validate([

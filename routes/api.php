@@ -25,6 +25,7 @@ Route::post('/auth/logout', 'Api\Auth\LoginController@logout')
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/attendance/today', 'Api\AttendanceController@today');
+    Route::get('/attendance/history', 'Api\AttendanceController@history');
     Route::post('/attendance/in', 'Api\AttendanceController@in');
     Route::post('/attendance/out', 'Api\AttendanceController@out');
 });
