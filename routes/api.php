@@ -28,4 +28,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/attendance/history', 'Api\AttendanceController@history');
     Route::post('/attendance/in', 'Api\AttendanceController@in');
     Route::post('/attendance/out', 'Api\AttendanceController@out');
+
+    Route::put('/profile/update', 'Api\ProfileController@update');
 });
