@@ -18,6 +18,8 @@ class CreateAttendancesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('long');
             $table->string('lat');
+            $table->string('address');
+            $table->string('photo');
             $table->enum('status', ['in', 'out']);
             $table->timestamps();
         });
