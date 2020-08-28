@@ -6,6 +6,7 @@ use App\Attendance;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,10 +29,18 @@ class AttendanceController extends Controller
             'type' => ['required']
         ]);
 
-        $data = $request->user()
-            ->attendances()
-            ->where('status', $request->type)
-            ->paginate(10);
+        if ($request->from && $request->to) {
+            $data = $request->user()
+                ->attendances()
+                ->where('status', $request->type)
+                ->whereBetween(DB::raw('DATE(created_at)'), [$request->from, $request->to])
+                ->paginate(10);
+        } else {
+            $data = $request->user()
+                ->attendances()
+                ->where('status', $request->type)
+                ->paginate(10);
+        }
 
         return response()->json([
             'message' => "list of attendaces by user with {$request->type} status",
