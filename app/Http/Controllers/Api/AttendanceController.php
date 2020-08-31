@@ -66,7 +66,7 @@ class AttendanceController extends Controller
                     'status' => 'in',
                     'long' => $request->long,
                     'lat' => $request->lat,
-                    'photo' => $path,
+                    'photo' => $path['name'],
                     'address' => $request->address
                 ]);
 
@@ -97,7 +97,7 @@ class AttendanceController extends Controller
                     'status' => 'out',
                     'long' => $request->long,
                     'lat' => $request->lat,
-                    'photo' => $path,
+                    'photo' => $path['name'],
                     'address' => $request->address
                 ]);
 
@@ -116,6 +116,9 @@ class AttendanceController extends Controller
         $extension = $photo->getClientOriginalExtension();
         $newName = $name . '.' . $extension;
         $path = Storage::putFileAs('public/photo', $photo, $newName);
-        return $path;
+        return [
+            'name' => $newName,
+            'path' => $path
+        ];
     }
 }

@@ -24,18 +24,18 @@ class ProfileController extends Controller
                 Storage::delete($user->photo);
             }
 
-            $name = $user->name . '-' . time();
+            $name = $request->name . '-' . time();
             $extension = $photo->getClientOriginalExtension();
             $newName = $name . '.' . $extension;
-            $path = Storage::putFileAs('public/profile', $photo, $newName);
+            Storage::putFileAs('public/profile', $photo, $newName);
         } else {
-            $path = $user->photo;
+            $newName = $user->photo;
         }
 
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
-            'photo' => $path
+            'photo' => $newName
         ]);
 
         return response()->json([

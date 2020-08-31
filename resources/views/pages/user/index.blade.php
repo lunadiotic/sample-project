@@ -27,7 +27,9 @@
                                 <td>{{ $loop->index+1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->photo }}</td>
+                                <td>
+                                    <img width="50" height="50" src="{{ asset('storage/profile/'.$user->photo) }}" alt="">
+                                </td>
                                 <td>
                                     <button class="btn btn-sm btn-info text-white">Edit</button>
                                     <button class="btn btn-sm btn-danger">Delete</button>
