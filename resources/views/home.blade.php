@@ -15,9 +15,12 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    <div id="chart" style="height: 300px"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection

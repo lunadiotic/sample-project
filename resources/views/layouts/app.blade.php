@@ -9,8 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -76,5 +74,26 @@
             @yield('content')
         </main>
     </div>
+
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" ></script>
+
+    <!-- Charting library -->
+    <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
+    <!-- Chartisan -->
+    <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
+
+    <script>
+        const chart = new Chartisan({
+            el: '#chart',
+            url: "@chart('attendance_chart')",
+            hooks: new ChartisanHooks()
+                .colors(['#3490dc', '#e3342f', '#38c172'])
+                .legend({ position: 'bottom' })
+                .datasets(['bar', 'bar', { type: 'line', fill: false }])
+                .tooltip()
+        });
+    </script>
 </body>
 </html>
