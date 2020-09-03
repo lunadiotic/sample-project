@@ -13,19 +13,17 @@ class RegisterController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
             'device_name' => ['required']
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'is_admin' => $request->is_admin ?? false
-        ]);
+        $data['password'] = Hash::make($request->password);
+        $data['is_admin'] = $request->is_admin ?? false;
+
+        $user = User::create($data);
 
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
