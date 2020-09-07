@@ -22,7 +22,8 @@ Route::post('/auth/register', 'Api\Auth\RegisterController');
 Route::post('/auth/login', 'Api\Auth\LoginController@login');
 Route::post('/auth/logout', 'Api\Auth\LoginController@logout')
     ->middleware('auth:sanctum');
-Route::post('auth/password/forgot', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/auth/password/forgot', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/auth/password/reset', 'Api\Auth\ResetPasswordController@reset')->middleware('auth:sanctum');
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/attendance/today', 'Api\AttendanceController@today');
