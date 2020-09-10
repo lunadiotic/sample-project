@@ -4,10 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary mb-2">Add</a>
             <div class="card">
                 <div class="card-header">
-                    User
+                    Attendance List
                 </div>
 
                 <div class="card-body">
@@ -15,8 +14,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>E-Mail</th>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Time</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -35,11 +35,15 @@
             processing: true,
             serverSide: true,
             responsive: true,
-            ajax: '{{ url("user") }}',
+            ajax: '{{ url("attendance") }}',
             columns: [
-                {data: 'id', name: 'id'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
+                {data: 'DT_RowIndex', name: 'id'},
+                {data: 'user.name', name: 'user.name'},
+                {data: 'status', name: 'status'},
+                {data: function(row) {
+                    let date = new Date(row.created_at);
+                    return date.toLocaleString();
+                }, name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

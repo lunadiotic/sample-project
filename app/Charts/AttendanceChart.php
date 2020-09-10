@@ -25,7 +25,7 @@ class AttendanceChart extends BaseChart
             ->labels(['Today'])
             ->dataset('In', [$this->countAtt('in')])
             ->dataset('Out', [$this->countAtt('out')])
-            ->dataset('Total User', [User::where('is_admin', true)->count()]);
+            ->dataset('Total User', [User::count()]);
     }
 
     /**

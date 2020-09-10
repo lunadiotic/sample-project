@@ -24,3 +24,17 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    const chart = new Chartisan({
+        el: '#chart',
+        url: "@chart('attendance_chart')",
+        hooks: new ChartisanHooks()
+            .colors(['#3490dc', '#e3342f', '#38c172'])
+            .legend({ position: 'bottom' })
+            .datasets(['bar', 'bar', { type: 'line', fill: false }])
+            .tooltip()
+    });
+</script>
+@endpush

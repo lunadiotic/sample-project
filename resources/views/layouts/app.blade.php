@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/r-2.2.5/datatables.min.css"/>
 </head>
 <body>
     <div id="app">
@@ -31,7 +32,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @auth
+                            @if (Auth::user()->is_admin)
+                            <li class="nav-item">
+                                <a href="{{ url('/home') }}" class="nav-link">Home</a>
+                            </li>
 
+                            <li class="nav-item">
+                                <a href="{{ url('/user') }}" class="nav-link">User</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url('/attendance') }}" class="nav-link">Attendance</a>
+                            </li>
+                            @endif
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -78,22 +93,15 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/r-2.2.5/datatables.min.js"></script>
 
     <!-- Charting library -->
     <script src="https://unpkg.com/echarts/dist/echarts.min.js"></script>
     <!-- Chartisan -->
     <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
 
-    <script>
-        const chart = new Chartisan({
-            el: '#chart',
-            url: "@chart('attendance_chart')",
-            hooks: new ChartisanHooks()
-                .colors(['#3490dc', '#e3342f', '#38c172'])
-                .legend({ position: 'bottom' })
-                .datasets(['bar', 'bar', { type: 'line', fill: false }])
-                .tooltip()
-        });
-    </script>
+
+
+    @stack('scripts')
 </body>
 </html>
