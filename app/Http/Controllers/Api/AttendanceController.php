@@ -54,7 +54,7 @@ class AttendanceController extends Controller
             'long' => ['required'],
             'lat' => ['required'],
             'address' => ['required'],
-            // 'photo' => ['required']
+            'photo' => ['required']
         ]);
 
         $data = $request->user()->attendances()
@@ -85,7 +85,7 @@ class AttendanceController extends Controller
             'long' => ['required'],
             'lat' => ['required'],
             'address' => ['required'],
-            // 'photo' => ['required']
+            'photo' => ['required']
         ]);
 
         $data = $request->user()->attendances()
@@ -112,7 +112,7 @@ class AttendanceController extends Controller
 
     public function uploadPhoto($photo, $user)
     {
-        $name = $user . '-' . time();
+        $name = \Str::slug($user) . '-' . time();
         $extension = $photo->getClientOriginalExtension();
         $newName = trim($name) . '.' . $extension;
         $path = Storage::putFileAs('public/photo', $photo, $newName);
