@@ -25,20 +25,20 @@ class AttendanceController extends Controller
 
     public function history(Request $request)
     {
-        $request->validate([
-            'type' => ['required']
-        ]);
+        // $request->validate([
+        //     'type' => ['required']
+        // ]);
 
         if ($request->from && $request->to) {
             $data = $request->user()
                 ->attendances()
-                ->where('status', $request->type)
+                // ->where('status', $request->type)
                 ->whereBetween(DB::raw('DATE(created_at)'), [$request->from, $request->to])
                 ->paginate(10);
         } else {
             $data = $request->user()
                 ->attendances()
-                ->where('status', $request->type)
+                // ->where('status', $request->type)
                 ->paginate(10);
         }
 
