@@ -25,22 +25,16 @@ class AttendanceController extends Controller
 
     public function history(Request $request)
     {
-        // $request->validate([
-        //     'type' => ['required']
-        // ]);
+        $request->validate([
+            'from' => ['required'],
+            'to' => ['required']
+        ]);
 
-        if ($request->from && $request->to) {
-            $data = $request->user()
+        $data = $request->user()
                 ->attendances()
-                // ->where('status', $request->type)
                 ->whereBetween(DB::raw('DATE(created_at)'), [$request->from, $request->to])
-                ->paginate(10);
-        } else {
-            $data = $request->user()
-                ->attendances()
-                // ->where('status', $request->type)
-                ->paginate(10);
-        }
+                ->orderBy('created_at')
+                ->get();
 
         return response()->json([
             'message' => "list of attendaces by user with {$request->type} status",
@@ -114,7 +108,7 @@ class AttendanceController extends Controller
     {
         $name = \Str::slug($user) . '-' . time();
         $extension = $photo->getClientOriginalExtension();
-        $newName = trim($name) . '.' . $extension;
+        $newName = $name . '.' . $extension;
         $path = Storage::putFileAs('public/photo', $photo, $newName);
         return [
             'name' => $newName,
