@@ -27,12 +27,14 @@ class AttendanceController extends Controller
     {
         $request->validate([
             'from' => ['required'],
-            'to' => ['required']
+            'to' => ['required'],
+            'type' => ['in:in,out']
         ]);
 
         $data = $request->user()
                 ->attendances()
                 ->whereBetween(DB::raw('DATE(created_at)'), [$request->from, $request->to])
+                ->where('status', $request->type)
                 ->orderBy('created_at')
                 ->get();
 
