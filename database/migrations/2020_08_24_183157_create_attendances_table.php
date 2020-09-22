@@ -21,6 +21,7 @@ class CreateAttendancesTable extends Migration
             $table->string('address');
             $table->string('photo');
             $table->enum('status', ['in', 'out']);
+            $table->timestamp('time');
             $table->timestamps();
         });
     }
