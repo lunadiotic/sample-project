@@ -41,7 +41,7 @@
                                             scrolling="no"
                                             marginheight="0"
                                             marginwidth="0"
-                                            src="https://maps.google.com/maps?q={{ $attendance->lat }},{{ $attendance->long }}&hl=es&z=14&amp;output=embed"
+                                            src="https://maps.google.com/maps?q={{ $attendance->lat }},{{ $attendance->long }}&hl=en&z=14&amp;output=embed"
                                         >
                                         </iframe>
                                     </div>
