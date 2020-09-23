@@ -23,8 +23,8 @@
                                 <td>{{ $attendance->user->name }}</td>
                             </tr>
                             <tr>
-                                <th>Long, Lat</th>
-                                <td>{{ $attendance->long }}, {{ $attendance->lat }}</td>
+                                <th>Lat, Long</th>
+                                <td>{{ $attendance->lat }}, {{ $attendance->long }}</td>
                             </tr>
                             <tr>
                                 <th>Address</th>
@@ -41,7 +41,7 @@
                                             scrolling="no"
                                             marginheight="0"
                                             marginwidth="0"
-                                            src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=en&amp;q={{ $attendance->long }},{{ $attendance->lat }}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
+                                            src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=en&amp;q={{ $attendance->lat }},{{ $attendance->long }}&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
                                         </iframe>
                                     </div>
                                 </td>
