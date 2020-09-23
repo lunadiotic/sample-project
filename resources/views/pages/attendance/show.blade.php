@@ -23,7 +23,7 @@
                                 <td>{{ $attendance->user->name }}</td>
                             </tr>
                             <tr>
-                                <th>Lat, Long</th>
+                                <th>Long, Lat</th>
                                 <td>{{ $attendance->long }}, {{ $attendance->lat }}</td>
                             </tr>
                             <tr>
