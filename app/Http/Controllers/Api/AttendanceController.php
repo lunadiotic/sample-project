@@ -49,14 +49,13 @@ class AttendanceController extends Controller
         $request->validate([
             'from' => ['required'],
             'to' => ['required'],
-            'type' => ['in:in,out']
         ]);
 
         $data = DB::select("SELECT name, ain.created_at as tanggal_in, aout.created_at as tanggal_out
             from users u
             JOIN attendances ain ON ain.user_id = u.id
             JOIN attendances aout ON aout.user_id = u.id
-            where u.id = 2
+            where u.id = {$request->user()->id}
             and ain.status = 'in'
             and aout.status = 'out'
             and DATE(ain.created_at) = DATE(aout.created_at)"
