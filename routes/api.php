@@ -28,6 +28,7 @@ Route::post('/auth/password/reset', 'Api\Auth\ResetPasswordController@reset')->m
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/attendance/today', 'Api\AttendanceController@today');
     Route::get('/attendance/history', 'Api\AttendanceController@history');
+    Route::get('/attendance/history/list', 'Api\AttendanceController@getHistory');
     Route::post('/attendance/in', 'Api\AttendanceController@in');
     Route::post('/attendance/out', 'Api\AttendanceController@out');
 

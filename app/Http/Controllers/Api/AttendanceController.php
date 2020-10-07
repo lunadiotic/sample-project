@@ -44,6 +44,30 @@ class AttendanceController extends Controller
         ], Response::HTTP_OK);
     }
 
+    public function getHistory(Request $request)
+    {
+        $request->validate([
+            'from' => ['required'],
+            'to' => ['required'],
+            'type' => ['in:in,out']
+        ]);
+
+        $data = DB::select("SELECT name, ain.created_at as tanggal_in, aout.created_at as tanggal_out
+            from users u
+            JOIN attendances ain ON ain.user_id = u.id
+            JOIN attendances aout ON aout.user_id = u.id
+            where u.id = 2
+            and ain.status = 'in'
+            and aout.status = 'out'
+            and DATE(ain.created_at) = DATE(aout.created_at)"
+        );
+
+        return response()->json([
+            'message' => "list of attendaces by user with {$request->type} status",
+            'data' => $data,
+        ], Response::HTTP_OK);
+    }
+
     public function in(Request $request)
     {
         $request->validate([
