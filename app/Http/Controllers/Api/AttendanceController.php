@@ -52,13 +52,15 @@ class AttendanceController extends Controller
         ]);
 
         $data = DB::select("SELECT name, ain.created_at as tanggal_in, aout.created_at as tanggal_out
-            from users u
+            FROM users u
             JOIN attendances ain ON ain.user_id = u.id
             JOIN attendances aout ON aout.user_id = u.id
-            where u.id = {$request->user()->id}
-            and ain.status = 'in'
-            and aout.status = 'out'
-            and DATE(ain.created_at) = DATE(aout.created_at)"
+            WHERE ain.created_at BETWEEN DATE('{$request->from}') AND DATE('{$request->to}')
+            AND u.id = {$request->user()->id}
+            AND ain.status = 'in'
+            AND aout.status = 'out'
+            AND DATE(ain.created_at) = DATE(aout.created_at)
+            "
         );
 
         return response()->json([
