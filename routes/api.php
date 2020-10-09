@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/attendance/out', 'Api\AttendanceController@out');
 
     Route::post('/presence', 'Api\PresenceController@store');
+    Route::get('/presence/history', 'Api\PresenceController@history');
 
     Route::put('/profile/update', 'Api\ProfileController@update');
 });

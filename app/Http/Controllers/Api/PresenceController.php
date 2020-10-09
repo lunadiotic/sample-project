@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class PresenceController extends Controller
@@ -123,5 +124,37 @@ class PresenceController extends Controller
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
+    }
+
+    /**
+     * Get List Presences by User
+     * @param Request $request
+     * @return JsonResponse
+     * @throws BindingResolutionException
+     */
+    public function history(Request $request)
+    {
+        $request->validate(
+            [
+                'from' => ['required'],
+                'to' => ['required'],
+            ]
+        );
+
+        $history = $request->user()->presences()->with('detail')
+            ->whereBetween(
+                DB::raw('DATE(created_at)'),
+                [
+                    $request->from, $request->to
+                ]
+            )->get();
+
+        return response()->json(
+            [
+                'message' => "list of presences by user",
+                'data' => $history,
+            ],
+            Response::HTTP_OK
+        );
     }
 }
