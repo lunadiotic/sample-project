@@ -29,19 +29,19 @@ trait ImageStorage
         $name = Str::slug($name) . '-' . time();
         $extension = $photo->getClientOriginalExtension();
         $newName = $name . '.' . $extension;
-        Storage::putFileAs('public/profile', $photo, $newName);
+        Storage::putFileAs("/public/{$path}", $photo, $newName);
         return $newName;
     }
 
     /**
-     * 
+     *
      * @param mixed $old_photo
      * @param mixed $path
      * @return void
      */
     public function deleteImage($old_photo, $path)
     {
-        Storage::delete("/public/{$path}/" . $old_photo);
+        Storage::delete("/public/{$path}" . $old_photo);
     }
 }
 
