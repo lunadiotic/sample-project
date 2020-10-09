@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\ImageStorage;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    use ImageStorage;
+
     /**
      * Construct
      * @return void
@@ -68,13 +71,7 @@ class UserController extends Controller
         $photo = $request->file('image');
 
         if ($photo) {
-            $name = \Str::slug($request->name) . '-' . time();
-            $extension = $photo->getClientOriginalExtension();
-            $newName = $name . '.' . $extension;
-            Storage::putFileAs('public/profile', $photo, $newName);
-            $request['photo'] = $newName;
-        } else {
-            $request['photo'] = '';
+            $request['photo'] = $this->uploadImage($photo, $request->name, 'profile');
         }
 
         $request['password'] = Hash::make($request->password);
@@ -92,7 +89,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('pages.user.show', compact('user'));
     }
 
     /**
@@ -103,7 +101,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('pages.user.edit', compact('user'));
     }
 
     /**
@@ -115,7 +114,22 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $photo = $request->file('image');
+
+        if ($photo) {
+            $request['photo'] = $this->uploadImage($photo, $request->name, 'profile', true, $user->photo);
+        }
+
+        if ($request->password) {
+            $request['password'] = Hash::make($request->password);
+        } else {
+            $request['password'] = $user->password;
+        }
+
+        $user->update($request->all());
+
+        return redirect()->route('user.index');
     }
 
     /**
@@ -129,7 +143,7 @@ class UserController extends Controller
         $user = User::find($id);
 
         if ($user->photo) {
-            Storage::delete('/public/profile/' . $user->photo);
+            $this->deleteImage($user->photo, 'profile');
         }
 
         $user->delete();
