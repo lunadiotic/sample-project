@@ -20,5 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('user', 'UserController');
+Route::resource('user', 'UserController')->middleware('is_admin');
 Route::resource('attendance', 'AttendanceController')->only(['index', 'show']);
