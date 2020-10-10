@@ -23,81 +23,6 @@
 <!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-            <div class="col-lg-4 col-6">
-                <!-- small box -->
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        @php
-                        $user = \App\User::count();
-                        @endphp
-                        <h3>{{ $user }}</h3>
-
-                        <p>Users</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-person-add"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-4 col-6">
-                <!-- small box -->
-                <div class="small-box bg-success">
-                    <div class="inner">
-                        @php
-                            $in = \App\Attendance::where('status', 'in')
-                                    ->whereDate('created_at', \Carbon\Carbon::today())
-                                    ->count();
-                        @endphp
-
-                        <h3>
-                        @if ($user != 0 && $in != 0)
-                            {{($in/$user)*100}}
-                        @else
-                            0
-                        @endif
-                        <sup style="font-size: 20px">%</sup></h3>
-
-                        <p>Total IN: {{ $in }}</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-4 col-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        @php
-                            $out = \App\Attendance::where('status', 'out')
-                                ->whereDate('created_at', \Carbon\Carbon::today())
-                                ->count();
-                        @endphp
-                        <h3>
-                        @if ($user != 0 && $out != 0)
-                            {{($out/$user)*100}}
-                        @else
-                            0
-                        @endif
-                        <sup style="font-size: 20px">%</sup></h3>
-
-                        <p>Total IN: {{ $out }}</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            <!-- ./col -->
-        </div>
-        <!-- /.row -->
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
@@ -119,14 +44,7 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-
-
                         <div id="chart" style="height: 300px"></div>
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer clearfix">
-                        <button type="button" class="btn btn-info float-right"><i class="fas fa-plus"></i> Add
-                            item</button>
                     </div>
                 </div>
                 <!-- /.card -->

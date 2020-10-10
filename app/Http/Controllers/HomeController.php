@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Charts\AttendanceChart;
+use App\Presence;
+use App\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

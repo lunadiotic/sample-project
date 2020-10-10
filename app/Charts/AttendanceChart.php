@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App\Charts;
 
 use App\Attendance;
+use App\Presence;
 use App\User;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
@@ -23,21 +24,8 @@ class AttendanceChart extends BaseChart
     {
         return Chartisan::build()
             ->labels(['Today'])
-            ->dataset('In', [$this->countAtt('in')])
-            ->dataset('Out', [$this->countAtt('out')])
-            ->dataset('Total User', [User::count()]);
-    }
-
-    /**
-     * Count attendance by status
-     * @param int $status
-     * @return int
-     * @throws InvalidFormatException
-     */
-    private function countAtt($status)
-    {
-        return Attendance::where('status', $status)
-            ->whereDate('created_at', Carbon::today())
-            ->count();
+            ->dataset('In', [Presence::countPresence(false)])
+            ->dataset('Out', [Presence::countPresence(true)])
+            ->dataset('Total User', [User::where('is_admin', false)->count()]);
     }
 }
